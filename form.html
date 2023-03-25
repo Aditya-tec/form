@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>formm</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='se,css.css'>
+  <script src='main.js'></script>
+</head>
+<body>
+  <form>
+    <label for="fullname">Full Name:</label>
+    <input type="text" id="fullname" name="fullname" required minlength="5"><br>
+  
+    <label for="email">Email ID:</label>
+    <input type="email" id="email" name="email" required><br>
+  
+    <label for="phone">Phone Number:</label>
+    <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" oninvalid="this.setCustomValidity('Please enter a valid phone number')" oninput="this.setCustomValidity('')"><br>
+  
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required minlength="8" oninvalid="this.setCustomValidity('Password must be at least 8 characters long')" oninput="this.setCustomValidity('')"><br>
+  
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" id="confirm_password" name="confirm_password" required oninput="checkPasswordMatch()"><br>
+    <div id="password_match_error"></div>
+  
+    <button type="submit">Submit</button>
+  </form>
+  
+  <script>
+    function checkPasswordMatch() {
+      var password = document.getElementById("password").value;
+      var confirm_password = document.getElementById("confirm_password").value;
+  
+      if (password != confirm_password) {
+        document.getElementById("password_match_error").innerHTML = "Passwords do not match";
+      } else {
+        document.getElementById("password_match_error").innerHTML = "";
+      }
+    }
+  
+    // for email format
+    var emailInput = document.getElementById("email");
+    emailInput.addEventListener("input", function (event) {
+      if (emailInput.validity.typeMismatch) {
+        emailInput.setCustomValidity("Please enter a valid email address");
+      } else {
+        emailInput.setCustomValidity("");
+      }
+    });
+  
+    // for  password strength
+    var passwordInput = document.getElementById("password");
+    passwordInput.addEventListener("input", function (event) {
+      var password = passwordInput.value;
+      if (password === "password" || password === document.getElementById("fullname").value || password.length < 8) {
+        passwordInput.setCustomValidity("Password is not strong");
+      } else {
+        passwordInput.setCustomValidity("");
+      }
+    });
+  </script>
+  
+</body>
+</html>
